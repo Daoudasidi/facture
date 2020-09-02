@@ -11,9 +11,13 @@ export default class App {
 		var article = prompt("Quel article voulez-vous acheter?", "Télé");
 		var prixunitaire = parseFloat(prompt("Quel est le prix unitaire?", "1000"));
 		var quantite = parseInt(prompt("Combien en voulez-vous?", "2"));
-		
+		var livraison = confirm("Livraison?");
+
 		// TRAITEMENT
 		var soustotal = prixunitaire * quantite;
+		if (livraison === true) {
+			soustotal += 50;
+		}
 		var tps = soustotal * 5 / 100;
 		var tvq = soustotal * 9.975 / 100;
 		var total = soustotal + tps + tvq;
@@ -36,6 +40,12 @@ export default class App {
 		var divQuantite = facture.appendChild(document.createElement("div"));
 		divQuantite.classList.add("quantite");
 		divQuantite.innerHTML = quantite;
+
+		if (livraison === true) {
+			var divLivraison = facture.appendChild(document.createElement("div"));
+			divLivraison.classList.add("livraison");
+			divLivraison.innerHTML = "50.00 $";
+		}
 
 		var divSousTotal = facture.appendChild(document.createElement("div"));
 		divSousTotal.classList.add("soustotal");
