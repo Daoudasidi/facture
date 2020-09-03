@@ -79,6 +79,9 @@ body {
 	.quantite::before {
 		content:"Quantité:";
 	}
+	.livraison::before {
+		content:"Livraison:";
+	}
 	.soustotal::before {
 		content:"Sous-total:";
 	}

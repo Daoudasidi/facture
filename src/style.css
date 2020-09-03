@@ -107,6 +107,10 @@ body {
   content: "Quantité:";
 }
 
+#facture .livraison::before {
+  content: "Livraison:";
+}
+
 #facture .soustotal::before {
   content: "Sous-total:";
 }
