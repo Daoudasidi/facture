@@ -126,4 +126,37 @@ body {
 #facture .total::before {
   content: "Total:";
 }
+
+#caisse {
+  border: 1px solid black;
+  padding: 1em;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 7em 1fr;
+      grid-template-columns: 7em 1fr;
+  width: 20em;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.5);
+  background-color: #ffd280;
+  grid-gap: .5em;
+}
+
+#caisse div {
+  display: contents;
+}
+
+#caisse button {
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 2;
+  grid-column: 1 / span 2;
+}
+
+#caisse label[for] {
+  text-align: right;
+  font-weight: bold;
+}
+
+#caisse input[type="number"] {
+  text-align: right;
+}
 /*# sourceMappingURL=style.css.map */

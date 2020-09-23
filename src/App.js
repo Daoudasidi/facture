@@ -15,73 +15,93 @@ export default class App {
 	 *              pour éviter d'avoir à les rentrer à chaque essai.
 	 */
 	static main() {
+		document.getElementById("btnFacturer").addEventListener("click", e => {
+			this.facturer();
+		});
+		document.getElementById("caisse").addEventListener("change", e => {
+			this.facturer();
+		});
+	}
+	static facturer() {
 		const PRIX_LIVRAISON = 50;
 
 		var app = document.getElementById("app");
 		// SAISIE====================================================
-		var article, prixunitaire, quantite, livraison
+		var caisse, inArticle, inPrixUnitaire, inQuantite, inLivraison
+		caisse = document.getElementById("caisse");
 		// Demander à l'usager quel article acheter.
-		var article = prompt("Quel article voulez-vous acheter?", "Télé");
+		inArticle = caisse.inArticle.value;
+		// console.log(inArticle);
 		// Demander à l'usager le prix unitaire. Transformer le résultat en float.
-		var prixunitaire = parseFloat(prompt("Quel est le prix unitaire?", "1000"));
+		inPrixUnitaire = caisse.inPrixUnitaire.valueAsNumber;
+		// console.log(inPrixUnitaire);
 		// Demander à l'usager la quantité. Transformer le résultat en integer.
-		var quantite = parseInt(prompt("Combien en voulez-vous?", "2"));
+		inQuantite = caisse.inQuantite.valueAsNumber;
+		// console.log(inQuantite);
 		// Demander à l'usager s'il veut faire livrer.
-		var livraison = confirm("Livraison?");
+		inLivraison = caisse.inLivraison.checked;
+		// console.log(inLivraison);
 
 		// TRAITEMENT================================================
+		var soustotal, tps, tvq, total;
 		// Calculer le sous-total (le prix multiplié par la quantité)
-		var soustotal = prixunitaire * quantite;
-		// Ajouter le prix de la livraison au besoin (si livraison est true)
-		if (livraison === true) {
+		soustotal = inPrixUnitaire * inQuantite;
+		// Ajouter le prix de la livraison au besoin (si inLivraison est true)
+		if (inLivraison === true) {
 			soustotal += PRIX_LIVRAISON;
 		}
 		// Calculer la TPS (5% du sous-total)
-		var tps = soustotal * 5 / 100;
+		tps = soustotal * 5 / 100;
 		// Calculer la TVQ (9.975% du sous-total)
-		var tvq = soustotal * 9.975 / 100;
+		tvq = soustotal * 9.975 / 100;
 		// Calculer le total (aditionner le sous-total, la tps et la tvq)
-		var total = soustotal + tps + tvq;
+		total = soustotal + tps + tvq;
 
 		// AFFICHAGE=================================================
+		var facture, h1, divArticle, divPrixUnitaire, divQuantite, divLivraison, divSousTotal, divTPS, divTVQ, divTotal;
+		// Supprimer la facture si elle existe avant de la reproduire
+		facture = document.getElementById("facture");
+		if (facture !== null) {
+			facture.parentNode.removeChild(facture);
+		}
 		// Reproduire le HTML de la facture
-		var facture = app.appendChild(document.createElement("div"));
+		facture = app.appendChild(document.createElement("div"));
 		facture.id = "facture";
 		
-		var h1 = facture.appendChild(document.createElement("h1"));
+		h1 = facture.appendChild(document.createElement("h1"));
 		h1.innerHTML = "Au bon rabais";
 
-		var divArticle = facture.appendChild(document.createElement("div"));
+		divArticle = facture.appendChild(document.createElement("div"));
 		divArticle.classList.add("article");
-		divArticle.innerHTML = article;
+		divArticle.innerHTML = inArticle;
 
-		var divPrixUnitaire = facture.appendChild(document.createElement("div"));
+		divPrixUnitaire = facture.appendChild(document.createElement("div"));
 		divPrixUnitaire.classList.add("prixunitaire");
-		divPrixUnitaire.innerHTML = prixunitaire.toFixed(2) + " $";
+		divPrixUnitaire.innerHTML = inPrixUnitaire.toFixed(2) + " $";
 
-		var divQuantite = facture.appendChild(document.createElement("div"));
+		divQuantite = facture.appendChild(document.createElement("div"));
 		divQuantite.classList.add("quantite");
-		divQuantite.innerHTML = quantite;
+		divQuantite.innerHTML = inQuantite;
 
-		if (livraison === true) {
-			var divLivraison = facture.appendChild(document.createElement("div"));
+		if (inLivraison === true) {
+			divLivraison = facture.appendChild(document.createElement("div"));
 			divLivraison.classList.add("livraison");
 			divLivraison.innerHTML = PRIX_LIVRAISON + ".00 $";
 		}
 
-		var divSousTotal = facture.appendChild(document.createElement("div"));
+		divSousTotal = facture.appendChild(document.createElement("div"));
 		divSousTotal.classList.add("soustotal");
 		divSousTotal.innerHTML = soustotal.toFixed(2) + "$";
 
-		var divTPS = facture.appendChild(document.createElement("div"));
+		divTPS = facture.appendChild(document.createElement("div"));
 		divTPS.classList.add("tps");
 		divTPS.innerHTML = tps.toFixed(2) + "$";
 
-		var divTVQ = facture.appendChild(document.createElement("div"));
+		divTVQ = facture.appendChild(document.createElement("div"));
 		divTVQ.classList.add("tvq");
 		divTVQ.innerHTML = tvq.toFixed(2) + "$";
 
-		var divTotal = facture.appendChild(document.createElement("div"));
+		divTotal = facture.appendChild(document.createElement("div"));
 		divTotal.classList.add("total");
 		divTotal.innerHTML = total.toFixed(2) + "$";
 

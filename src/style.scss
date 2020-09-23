@@ -95,3 +95,28 @@ body {
 		content:"Total:";
 	}
 }
+
+#caisse {
+	border:1px solid black;
+	padding: 1em;
+	display: grid;
+	grid-template-columns: 7em 1fr;
+	width: 20em;
+	margin: 0 auto;
+	background-color: rgba(255,255,255,.5);
+	background-color: #ffd280;
+	grid-gap: .5em;
+	div {
+		display: contents;
+	}
+	button {
+		grid-column: 1 / span 2;
+	}
+	label[for] {
+		text-align: right;
+		font-weight: bold;
+	}
+	input[type="number"] {
+		text-align: right;
+	}
+}

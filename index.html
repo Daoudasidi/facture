@@ -17,7 +17,29 @@
 		</header>
 		<footer><span>&copy; 2020</span><strong>Au bon rabais</strong></footer>
 		<div class="body" id="app">
+			<form action="" id="caisse" onsubmit="return false;">
+				<div>
+					<label for="inArticle">Article</label>
+					<input type="text" name="inArticle" id="inArticle" value="Télé">
+				</div>
+				<div>
+					<label for="inPrixUnitaire">Prix Unitaire</label>
+					<input type="number" name="inPrixUnitaire" id="inPrixUnitaire" step=".01" min="0" value="1000"/>
+				</div>
+				<div>
+					<label for="inQuantite">Quantité</label>
+					<input type="number" name="inQuantite" id="inQuantite" min="1" value="2"/>
+				</div>
+				<div>
+					<label for="inLivraison">Livraison</label>
+					<input type="checkbox" name="inLivraison" id="inLivraison"/>
+				</div>
+				<div>
+					<button id="btnFacturer" type="button">Facturer</button>
+				</div>
+			</form>
 			<h1>Votre facture</h1>
+
 		</div>
 	</div>
 </body>
