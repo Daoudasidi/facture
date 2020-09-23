@@ -28,42 +28,34 @@ export default class App {
 		var app = document.getElementById("app");
 		// SAISIE====================================================
 		var caisse, inArticle, inPrixUnitaire, inQuantite, inLivraison
-		caisse = document.getElementById("caisse");
+		// Récupérer le formulaire
+		
 		// Demander à l'usager quel article acheter.
-		inArticle = caisse.inArticle.value;
-		// console.log(inArticle);
-		// Demander à l'usager le prix unitaire. Transformer le résultat en float.
-		inPrixUnitaire = caisse.inPrixUnitaire.valueAsNumber;
-		// console.log(inPrixUnitaire);
-		// Demander à l'usager la quantité. Transformer le résultat en integer.
-		inQuantite = caisse.inQuantite.valueAsNumber;
-		// console.log(inQuantite);
-		// Demander à l'usager s'il veut faire livrer.
-		inLivraison = caisse.inLivraison.checked;
-		// console.log(inLivraison);
 
+		// Demander à l'usager le prix unitaire. Transformer le résultat en float.
+
+		// Demander à l'usager la quantité. Transformer le résultat en integer.
+
+		// Demander à l'usager s'il veut faire livrer.
+
+		
 		// TRAITEMENT================================================
 		var soustotal, tps, tvq, total;
 		// Calculer le sous-total (le prix multiplié par la quantité)
-		soustotal = inPrixUnitaire * inQuantite;
-		// Ajouter le prix de la livraison au besoin (si inLivraison est true)
-		if (inLivraison === true) {
-			soustotal += PRIX_LIVRAISON;
-		}
-		// Calculer la TPS (5% du sous-total)
-		tps = soustotal * 5 / 100;
-		// Calculer la TVQ (9.975% du sous-total)
-		tvq = soustotal * 9.975 / 100;
-		// Calculer le total (aditionner le sous-total, la tps et la tvq)
-		total = soustotal + tps + tvq;
 
+		// Ajouter le prix de la livraison au besoin (si inLivraison est true)
+
+		// Calculer la TPS (5% du sous-total)
+
+		// Calculer la TVQ (9.975% du sous-total)
+
+		// Calculer le total (aditionner le sous-total, la tps et la tvq)
+
+		
 		// AFFICHAGE=================================================
 		var facture, h1, divArticle, divPrixUnitaire, divQuantite, divLivraison, divSousTotal, divTPS, divTVQ, divTotal;
 		// Supprimer la facture si elle existe avant de la reproduire
-		facture = document.getElementById("facture");
-		if (facture !== null) {
-			facture.parentNode.removeChild(facture);
-		}
+
 		// Reproduire le HTML de la facture
 		facture = app.appendChild(document.createElement("div"));
 		facture.id = "facture";
@@ -73,38 +65,37 @@ export default class App {
 
 		divArticle = facture.appendChild(document.createElement("div"));
 		divArticle.classList.add("article");
-		divArticle.innerHTML = inArticle;
-
+		// Ajouter l'article
+		
 		divPrixUnitaire = facture.appendChild(document.createElement("div"));
 		divPrixUnitaire.classList.add("prixunitaire");
-		divPrixUnitaire.innerHTML = inPrixUnitaire.toFixed(2) + " $";
+		// Ajouter le prix unitaire
 
 		divQuantite = facture.appendChild(document.createElement("div"));
 		divQuantite.classList.add("quantite");
-		divQuantite.innerHTML = inQuantite;
-
-		if (inLivraison === true) {
+		// Ajouter la quantité
+		
+		// La livraison ne doit s'afficher que si elle est demandée
 			divLivraison = facture.appendChild(document.createElement("div"));
 			divLivraison.classList.add("livraison");
-			divLivraison.innerHTML = PRIX_LIVRAISON + ".00 $";
-		}
+			// Ajouter la livraison
 
 		divSousTotal = facture.appendChild(document.createElement("div"));
 		divSousTotal.classList.add("soustotal");
-		divSousTotal.innerHTML = soustotal.toFixed(2) + "$";
-
+		// Ajouter le sous-total
+		
 		divTPS = facture.appendChild(document.createElement("div"));
 		divTPS.classList.add("tps");
-		divTPS.innerHTML = tps.toFixed(2) + "$";
-
+		// Ajouter la TPS
+		
 		divTVQ = facture.appendChild(document.createElement("div"));
 		divTVQ.classList.add("tvq");
-		divTVQ.innerHTML = tvq.toFixed(2) + "$";
-
+		// Ajouter la TVQ
+		
 		divTotal = facture.appendChild(document.createElement("div"));
 		divTotal.classList.add("total");
-		divTotal.innerHTML = total.toFixed(2) + "$";
-
+		// Ajouter le total
+		
 	}
 	/**
 	 * Méthode qui permet d'attendre le chargement de la page avant d'éxécuter le script principal
