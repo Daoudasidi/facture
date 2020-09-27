@@ -15,6 +15,9 @@ export default class App {
 	 *              pour éviter d'avoir à les rentrer à chaque essai.
 	 */
 	static main() {
+		this.PRIX_LIVRAISON = 50;
+		this.TAUX_TPS = 5;
+		this.TAUX_TVQ = 9.975;
 		document.getElementById("btnFacturer").addEventListener("click", e => {
 			this.facturer();
 		});
@@ -23,7 +26,6 @@ export default class App {
 		});
 	}
 	static facturer() {
-		const PRIX_LIVRAISON = 50;
 
 		var app = document.getElementById("app");
 		// SAISIE====================================================
@@ -45,17 +47,13 @@ export default class App {
 		// TRAITEMENT================================================
 		var soustotal, tps, tvq, total;
 		// Calculer le sous-total (le prix multiplié par la quantité)
-		soustotal = inPrixUnitaire * inQuantite;
-		// Ajouter le prix de la livraison au besoin (si inLivraison est true)
-		if (inLivraison === true) {
-			soustotal += PRIX_LIVRAISON;
-		}
+		soustotal = this.soustotal(inPrixUnitaire, inQuantite, inLivraison);
 		// Calculer la TPS (5% du sous-total)
-		tps = soustotal * 5 / 100;
+		tps = this.tps(soustotal);
 		// Calculer la TVQ (9.975% du sous-total)
-		tvq = soustotal * 9.975 / 100;
+		tvq = this.tvq(soustotal);
 		// Calculer le total (aditionner le sous-total, la tps et la tvq)
-		total = soustotal + tps + tvq;
+		total = this.total(soustotal);
 
 		// AFFICHAGE=================================================
 		var facture, h1, divArticle, divPrixUnitaire, divQuantite, divLivraison, divSousTotal, divTPS, divTVQ, divTotal;
@@ -77,7 +75,7 @@ export default class App {
 
 		divPrixUnitaire = facture.appendChild(document.createElement("div"));
 		divPrixUnitaire.classList.add("prixunitaire");
-		divPrixUnitaire.innerHTML = inPrixUnitaire.toFixed(2) + " $";
+		divPrixUnitaire.innerHTML = this.monnaie(inPrixUnitaire);
 
 		divQuantite = facture.appendChild(document.createElement("div"));
 		divQuantite.classList.add("quantite");
@@ -86,25 +84,76 @@ export default class App {
 		if (inLivraison === true) {
 			divLivraison = facture.appendChild(document.createElement("div"));
 			divLivraison.classList.add("livraison");
-			divLivraison.innerHTML = PRIX_LIVRAISON + ".00 $";
+			divLivraison.innerHTML = this.monnaie(this.PRIX_LIVRAISON);
 		}
 
 		divSousTotal = facture.appendChild(document.createElement("div"));
 		divSousTotal.classList.add("soustotal");
-		divSousTotal.innerHTML = soustotal.toFixed(2) + "$";
+		divSousTotal.innerHTML = this.monnaie(soustotal);
 
 		divTPS = facture.appendChild(document.createElement("div"));
 		divTPS.classList.add("tps");
-		divTPS.innerHTML = tps.toFixed(2) + "$";
+		divTPS.innerHTML = this.monnaie(tps);
 
 		divTVQ = facture.appendChild(document.createElement("div"));
 		divTVQ.classList.add("tvq");
-		divTVQ.innerHTML = tvq.toFixed(2) + "$";
+		divTVQ.innerHTML = this.monnaie(tvq);
 
 		divTotal = facture.appendChild(document.createElement("div"));
 		divTotal.classList.add("total");
-		divTotal.innerHTML = total.toFixed(2) + "$";
+		divTotal.innerHTML = this.monnaie(total);
 
+	}
+	/**
+	 * Retourne une chaine contenant la version formattée d'un montant en dollars
+	 * @param {number} montant Le montant à formatter
+	 */
+	static monnaie(montant) {
+		var resultat;
+		resultat = montant.toFixed(2) + " $";
+		return resultat;
+	}
+	/**
+	 * Retourne le sous-total d'une transaction incluant la livraison au besoin
+	 * @param number prix Le prix unitaire
+	 * @param number qte La quantité achetée
+	 * @param boolean liv Doit-on inclure la livraison
+	 * @returns integer
+	 */
+	static soustotal(prix, qte, liv) {
+		var resultat;
+		resultat = prix * qte;
+		if (liv === true) {
+			resultat += this.PRIX_LIVRAISON;
+		}
+		return resultat;
+	}
+	/**
+	 * Retourne la TPS d'un montant donné
+	 * @param {number} montant La TPS déduite du montant donné
+	 */
+	static tps(montant) {
+		var resultat;
+		resultat = montant * this.TAUX_TPS / 100;
+		return resultat;
+	}
+	/**
+	 * Retourne la TVQ d'un montant donné
+	 * @param {number} montant La TVP déduite du montant donné
+	 */
+	static tvq(montant) {
+		var resultat;
+		resultat = montant * this.TAUX_TVQ / 100;
+		return resultat;
+	}
+	/**
+	 * Retourne le total avec taxes d'un montant donné
+	 * @param {number} montant 
+	 */
+	static total(montant) {
+		var resultat;
+		resultat = montant + this.tps(montant) + this.tvq(montant);
+		return resultat;
 	}
 	/**
 	 * Méthode qui permet d'attendre le chargement de la page avant d'éxécuter le script principal
